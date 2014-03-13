@@ -1,0 +1,57 @@
+<VirtualHost *:8082>
+    SSLEngine on
+    SSLCertificateFile /var/genorama/web_side/stable/cert/server.crt
+    SSLCertificateKeyFile /var/genorama/web_side/stable/cert/server.key
+
+    Alias /logout /var/filemanager/logout
+
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/filemanager
+    
+    <Directory /var/filemanager>
+        Options FollowSymLinks
+        AllowOverride None
+        AuthType Basic
+        AuthName "Authentication Required"
+        AuthUserFile "/var/genorama/web_side/db/htpasswd.db"
+    Require valid-user
+    </Directory>
+
+    <Location /logout>
+        AuthType Basic
+        AuthName "Authentication Required"
+        AuthUserFile "/var/filemanager/logout/.htpasswd"
+        Require valid-user
+    </Location>
+
+    <Location /manager>
+        Order deny,allow
+        Allow from all
+        ProxyPass https://localhost:8082/
+    </Location>
+
+    <Directory /var/www/>
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride None
+        Order allow,deny
+        allow from all
+    </Directory>
+    
+    ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
+    <Directory "/usr/lib/cgi-bin">
+        AllowOverride None
+        Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+        Order allow,deny
+        Allow from all
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+
+    # Possible values include: debug, info, notice, warn, error, crit,
+    # alert, emerg.
+    LogLevel warn
+
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+</VirtualHost>
+

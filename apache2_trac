@@ -1,6 +1,7 @@
 <VirtualHost *:8083>
     Alias /trac/chrome/common /var/genorama/trac/htdocs/common
     Alias /trac/chrome/site /var/genorama/trac/htdocs/site
+    Alias /logout /var/genorama/trac/htdocs/site/logout
 
     <Directory "/var/genorama/trac/htdocs">
         Order allow,deny
@@ -22,8 +23,14 @@
         Require valid-user
     </Location>
 
+    <Location "/logout">
+        AuthType Basic
+        AuthName "Authentication Required"
+        AuthUserFile "/var/genorama/trac/htdocs/site/logout/.htpasswd"
+        Require valid-user
+    </Location>
+
     SSLEngine on
     SSLCertificateFile /var/genorama/web_side/stable/cert/server.crt
     SSLCertificateKeyFile /var/genorama/web_side/stable/cert/server.key
-
 </VirtualHost>
