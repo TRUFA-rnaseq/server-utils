@@ -1,0 +1,17 @@
+#+STARTUP: showall
+
+TRUFA (Transcriptomes User-Friendly Analysis) is a free webserver designed to
+help you perform RNA-seq analysis.
+
+Joint work done by:
+
+ - Advanced Computing & e-Science Research Line at Instituto de Física de
+   Cantabria (IFCA)
+ - Museo Nacional de Ciencias Naturales
+
+This repository contains util scripts to help the deploy of TRUFA in a server
+machine. It contains
+
+ * Apache 2 config file examples
+ * Upstart config file examples
+
